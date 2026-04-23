@@ -7,7 +7,7 @@ let icons = [];
 let selectedIcon = null;
 let showWindow = false;
 let isEraseMode = false;
-let isInitialized = false; // URL読み込み完了フラグ
+let isInitialized = false; 
 let currentPage = 0;
 const iconsPerPage = 12;
 let listFilter = {};
@@ -15,11 +15,10 @@ const SNAP = 5;
 
 const win = { x: 100, y: 100, w: 400, h: 400, title: "➕✨" };
 
-// 1. データ読み込み（非同期を厳密に制御）
 async function loadData() {
     try {
-        const response = await fetch('data.json');
-        if (!response.ok) throw new Error('Network response was not ok');
+        const response = await fetch('./data.json');
+        if (!response.ok) throw new Error('404');
         const data = await response.json();
         availableIcons = data.availableIcons;
         
@@ -27,7 +26,6 @@ async function loadData() {
         data.categories.forEach(cat => {
             const isDefaultOn = (cat.id !== "na");
             listFilter[cat.id] = isDefaultOn; 
-            
             const label = document.createElement('label');
             label.className = 'switch';
             label.innerHTML = `
@@ -37,9 +35,8 @@ async function loadData() {
             container.appendChild(label);
         });
         
-        // マスターデータが揃ってからURLを展開
         loadFromURL();
-        isInitialized = true; // ここで初めてURL自動更新を解禁
+        isInitialized = true; 
         draw();
     } catch (e) { 
         console.error("Load failed", e);
@@ -53,12 +50,10 @@ function updateFilter(type) {
     draw();
 }
 
-// 2. 描画コア
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white"; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // グリッド
     ctx.lineWidth = 1;
     for (let i = 0; i <= 600; i += 50) {
         ctx.beginPath(); ctx.strokeStyle = (i === 300) ? "#444" : "#eee";
@@ -66,11 +61,9 @@ function draw() {
         ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(600, i); ctx.stroke();
     }
 
-    // アイコン
     icons.forEach(icon => drawEmoji(icon.emoji, icon.x, icon.y, 48, 18));
     drawLabels();
 
-    // タイトル
     const title = document.getElementById('chartTitle').value;
     if(title) {
         ctx.font = "bold 24px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "top";
@@ -81,8 +74,6 @@ function draw() {
 
     if (showWindow) drawWindow();
     document.getElementById('addBtn').classList.toggle('active', showWindow);
-    
-    // 初期化が終わっている時のみURLを同期
     if (isInitialized) syncURL();
 }
 
@@ -151,7 +142,6 @@ function drawWindow() {
     if(currentPage < maxPage) ctx.fillText("➡️", win.x+330, win.y+385);
 }
 
-// 3. UI演出
 function showToast(msg) {
     const old = document.querySelector('.toast'); if(old) old.remove();
     const t = document.createElement('div'); t.className='toast'; t.innerText=msg;
@@ -159,7 +149,6 @@ function showToast(msg) {
     setTimeout(() => { t.classList.add('fade-out'); setTimeout(()=>t.remove(), 500); }, 2000);
 }
 
-// 4. イベント処理
 function getPos(e) {
     const rect = canvas.getBoundingClientRect();
     const scale = 600 / rect.width;
@@ -254,7 +243,6 @@ document.getElementById('saveBtn').addEventListener('click', () => {
     showToast("💾🖼️ ✅");
 });
 
-// 5. URL・データ同期
 function syncURL() {
     try {
         const data = {
@@ -262,8 +250,10 @@ function syncURL() {
             l: ["labelYpos", "labelYneg", "labelXpos", "labelXneg"].map(id => document.getElementById(id).value),
             i: icons.map(icon => `${icon.iconId},${icon.x/SNAP},${icon.y/SNAP}`).join(';')
         };
-        const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-        const newURL = window.location.origin + window.location.pathname + "?d=" + base64;
+        const jsonStr = JSON.stringify(data);
+        const uint8array = new TextEncoder().encode(jsonStr);
+        const base64 = btoa(String.fromCharCode(...uint8array));
+        const newURL = window.location.pathname + "?d=" + base64;
         window.history.replaceState(null, '', newURL);
     } catch (e) {}
 }
@@ -273,7 +263,9 @@ function loadFromURL() {
     const d = params.get('d');
     if (!d) return;
     try {
-        const jsonStr = decodeURIComponent(escape(atob(d)));
+        const binary = atob(d);
+        const uint8array = new Uint8Array([...binary].map(c => c.charCodeAt(0)));
+        const jsonStr = new TextDecoder().decode(uint8array);
         const data = JSON.parse(jsonStr);
         if (data.t) document.getElementById('chartTitle').value = data.t;
         const ids = ["labelYpos", "labelYneg", "labelXpos", "labelXneg"];
