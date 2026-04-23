@@ -1,0 +1,109 @@
+{
+  "categories": [
+    { "id": "j1", "label": "0️⃣1️⃣2️⃣" },
+    { "id": "j2", "label": "🎮3️⃣4️⃣" },
+    { "id": "j3", "label": "5️⃣✖️" },
+    { "id": "di", "label": "🎶" },
+    { "id": "en", "label": "🇬🇧" },
+    { "id": "id", "label": "🇮🇩" },
+    { "id": "na", "label": "🚫" },
+    { "id": "ex", "label": "➕" }
+  ],
+  "availableIcons": [
+    { "id":"a1","emoji": "🐻💿", "type": ["j1"] },
+    { "id":"a2","emoji": "🤖", "type": ["j1"] },
+    { "id":"a3","emoji": "🌸", "type": ["j1"] },
+    { "id":"a4","emoji": "☄️", "type": ["j1"] },
+    { "id":"a5","emoji": "⚒️", "type": ["j1"] },
+
+    { "id":"b1","emoji": "🌟", "type": ["j1","na"] },
+    { "id":"b2","emoji": "🍎", "type": ["j1"] },
+    { "id":"b3","emoji": "❤️", "type": ["j1"] },
+    { "id":"b4","emoji": "🌽", "type": ["j1"] },
+    { "id":"b5","emoji": "🏮", "type": ["j1"] },
+    
+    { "id":"c1","emoji": "⚓️", "type": ["j1"] },
+    { "id":"c2","emoji": "🌙", "type": ["j1"] },
+    { "id":"c3","emoji": "😈", "type": ["j1"] },
+    { "id":"c4","emoji": "💋", "type": ["j1"] },
+    { "id":"c5","emoji": "🚑", "type": ["j1"] },
+    
+    { "id":"d1","emoji": "🌲", "type": ["j2"] },
+    { "id":"d2","emoji": "🍙", "type": ["j2"] },
+    { "id":"d3","emoji": "🥐", "type": ["j2"] },
+    
+    { "id":"e1","emoji": "👯‍♀️‍️", "type": ["j2"] },
+    { "id":"e2","emoji": "🔥", "type": ["j2"] },
+    { "id":"e3","emoji": "⚔️", "type": ["j2"] },
+    { "id":"e4","emoji": "🏴‍☠️", "type": ["j2"] },
+    { "id":"e5","emoji": "🦋", "type": ["j2","na"] },
+    
+    { "id":"f1","emoji": "💫", "type": ["j2"] },
+    { "id":"f2","emoji": "🐉", "type": ["j2"] },
+    { "id":"f3","emoji": "🐏", "type": ["j2"] },
+    { "id":"f4","emoji": "👾", "type": ["j2"] },
+    { "id":"f5","emoji": "🍬", "type": ["j2"] },
+    
+    { "id":"g1","emoji": "☃️", "type": ["j3"] },
+    { "id":"g2","emoji": "🍑🥟", "type": ["j3"] },
+    { "id":"g3","emoji": "♌", "type": ["j3"] },
+    { "id":"g4","emoji": "🎪", "type": ["j3"] },
+    { "id":"g5","emoji": "👅", "type": ["j3"] },
+
+    { "id":"h1","emoji": "🛸💜", "type": ["j3"] },
+    { "id":"h2","emoji": "🥀", "type": ["j3"] },
+    { "id":"h3","emoji": "🧪", "type": ["j3"] },
+    { "id":"h4","emoji": "🎣", "type": ["j3"] },
+    { "id":"h5","emoji": "🍃", "type": ["j3"] },
+
+    { "id":"i1","emoji": "🖋️", "type": ["di"] },
+    { "id":"i2","emoji": "🎹✨", "type": ["di"] },
+    { "id":"i3","emoji": "🌃", "type": ["di"] },
+    { "id":"i4","emoji": "🐚", "type": ["di"] },
+    { "id":"i5","emoji": "🐧⚡", "type": ["di"] },
+
+    { "id":"j1","emoji": "🎤👑", "type": ["di"] },
+    { "id":"j2","emoji": "☺️🐅", "type": ["di"] },
+    { "id":"j3","emoji": "💬🔁💙", "type": ["di"] },
+    { "id":"j4","emoji": "🎧🔧", "type": ["di"] },
+    { "id":"j5","emoji": "💅✨", "type": ["di"] },
+
+    { "id":"k1","emoji": "💀", "type": ["en"] },
+    { "id":"k2","emoji": "🐔", "type": ["en"] },
+    { "id":"k3","emoji": "🐙", "type": ["en"] },
+    { "id":"k4","emoji": "🔎", "type": ["en"] },
+    { "id":"k5","emoji": "🔱", "type": ["en"] },
+
+    { "id":"l1","emoji": "💎", "type": ["en"] },
+    { "id":"l2","emoji": "⏳", "type": ["en"] },
+    { "id":"l3","emoji": "🎲", "type": ["en"] },
+    { "id":"l4","emoji": "🪐", "type": ["en"] },
+    { "id":"l5","emoji": "🌿", "type": ["en"] },
+    { "id":"l6","emoji": "🪶", "type": ["en"] },
+
+    { "id":"m1","emoji": "👁️‍🗨️", "type": ["en"] },
+    { "id":"m2","emoji": "🗿", "type": ["en"] },
+    { "id":"m3","emoji": "🎼", "type": ["en"] },
+    { "id":"m4","emoji": "🐾🩵", "type": ["en"] },
+    { "id":"m5","emoji": "🐾🩷", "type": ["en"] },
+    
+    
+    { "id":"n1","emoji": "💄", "type": ["en"] },
+    { "id":"n2","emoji": "👧", "type": ["en"] },
+    { "id":"n3","emoji": "🍵", "type": ["en"] },
+    { "id":"n4","emoji": "🐱", "type": ["en"] },
+
+    { "id":"o1","emoji": "🐿️", "type": ["id"] },
+    { "id":"o2","emoji": "🔮", "type": ["id"] },
+    { "id":"o3","emoji": "🎨", "type": ["id"] },
+
+    { "id":"p1","emoji": "🧟‍♀️", "type": ["id"] },
+    { "id":"p2","emoji": "🍂", "type": ["id"] },
+    { "id":"p3","emoji": "🦚", "type": ["id"] },
+
+    { "id":"q1","emoji": "📜", "type": ["id"] },
+    { "id":"q2","emoji": "🔨", "type": ["id"] },
+    { "id":"q3","emoji": "☔", "type": ["id"] }
+
+  ]
+}

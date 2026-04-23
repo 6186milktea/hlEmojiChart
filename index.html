@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="icon" href="data:,">
+    <title>📊🖼️✨</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="main-container">
+    <div class="canvas-area">
+        <canvas id="myCanvas"></canvas>
+    </div>
+
+    <div class="control-panel">
+        <div class="panel-section full-width">
+            <button id="addBtn" class="btn primary big-btn">➕✨</button>
+            <div class="mode-controls">
+                <button id="clearBtn" class="btn-text danger-text">🔥💣🔥</button>
+                <button id="eraseModeBtn" class="btn-mode">👆</button>
+            </div>
+        </div>
+
+        <div class="panel-section">
+            <h3>🔍📁</h3>
+            <div id="filter-container" class="filter-panel"></div>
+        </div>
+
+        <div class="panel-section full-width">
+            <details class="help-accordion">
+                <summary>💡📖</summary>
+                <div class="help-content">
+                    <p>➕ ➡️ 👆 ➡️ 📍</p>
+                    <p>🖱️ ➡️ ↔️</p>
+                    <p>🧼 ➡️ 👆 ➡️ 💨</p>
+                    <p>🔗 ➡️ 🤝 / 💾 ➡️ 🖼️</p>
+                </div>
+            </details>
+        </div>
+        
+        <div class="panel-section">
+            <h3>🏷️</h3>
+            <input type="text" id="chartTitle" oninput="draw()" placeholder="🖊️..." maxlength="30">
+        </div>
+
+        <div class="panel-section">
+            <h3>📏</h3>
+            <div class="axis-settings">
+                <input type="text" id="labelYpos" oninput="draw()" placeholder="⬆️" maxlength="15">
+                <div class="x-inputs">
+                    <input type="text" id="labelXneg" oninput="draw()" placeholder="⬅️" maxlength="15">
+                    <input type="text" id="labelXpos" oninput="draw()" placeholder="➡️" maxlength="15">
+                </div>
+                <input type="text" id="labelYneg" oninput="draw()" placeholder="⬇️" maxlength="15">
+            </div>
+        </div>
+
+        <div class="panel-section actions">
+            <button id="shareBtn" class="btn warning">🔗📋</button>
+            <button id="saveBtn" class="btn success">💾🖼️</button>
+            <div class="json-group">
+                <button id="exportBtn" class="btn info">📤📦</button>
+                <button id="importBtn" class="btn info">📥📦</button>
+            </div>
+            <input type="file" id="fileInput" style="display:none" accept=".json">
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
