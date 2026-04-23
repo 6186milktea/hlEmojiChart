@@ -6,8 +6,9 @@
     { "id": "di", "label": "🎶" },
     { "id": "en", "label": "🇬🇧" },
     { "id": "id", "label": "🇮🇩" },
-    { "id": "na", "label": "🚫" },
-    { "id": "ex", "label": "➕" }
+    { "id": "gd", "label": "🎓" },
+    { "id": "na", "label": "🚫" }
+    
   ],
   "availableIcons": [
     { "id":"a1","emoji": "🐻💿", "type": ["j1"] },
@@ -22,8 +23,8 @@
     { "id":"b4","emoji": "🌽", "type": ["j1"] },
     { "id":"b5","emoji": "🏮", "type": ["j1"] },
     
-    { "id":"c1","emoji": "⚓️", "type": ["j1"] },
-    { "id":"c2","emoji": "🌙", "type": ["j1"] },
+    { "id":"c1","emoji": "⚓️", "type": ["j1","gd"] },
+    { "id":"c2","emoji": "🌙", "type": ["j1","gd"] },
     { "id":"c3","emoji": "😈", "type": ["j1"] },
     { "id":"c4","emoji": "💋", "type": ["j1"] },
     { "id":"c5","emoji": "🚑", "type": ["j1"] },
@@ -38,8 +39,8 @@
     { "id":"e4","emoji": "🏴‍☠️", "type": ["j2"] },
     { "id":"e5","emoji": "🦋", "type": ["j2","na"] },
     
-    { "id":"f1","emoji": "💫", "type": ["j2"] },
-    { "id":"f2","emoji": "🐉", "type": ["j2"] },
+    { "id":"f1","emoji": "💫", "type": ["j2","gd"] },
+    { "id":"f2","emoji": "🐉", "type": ["j2","gd"] },
     { "id":"f3","emoji": "🐏", "type": ["j2"] },
     { "id":"f4","emoji": "👾", "type": ["j2"] },
     { "id":"f5","emoji": "🍬", "type": ["j2"] },
@@ -48,15 +49,15 @@
     { "id":"g2","emoji": "🍑🥟", "type": ["j3"] },
     { "id":"g3","emoji": "♌", "type": ["j3"] },
     { "id":"g4","emoji": "🎪", "type": ["j3"] },
-    { "id":"g5","emoji": "👅", "type": ["j3"] },
+    { "id":"g5","emoji": "👅", "type": ["j3","gd"] },
 
     { "id":"h1","emoji": "🛸💜", "type": ["j3"] },
     { "id":"h2","emoji": "🥀", "type": ["j3"] },
     { "id":"h3","emoji": "🧪", "type": ["j3"] },
-    { "id":"h4","emoji": "🎣", "type": ["j3"] },
+    { "id":"h4","emoji": "🎣", "type": ["j3","gd"] },
     { "id":"h5","emoji": "🍃", "type": ["j3"] },
 
-    { "id":"i1","emoji": "🖋️", "type": ["di"] },
+    { "id":"i1","emoji": "🖋️", "type": ["di","gd"] },
     { "id":"i2","emoji": "🎹✨", "type": ["di"] },
     { "id":"i3","emoji": "🌃", "type": ["di"] },
     { "id":"i4","emoji": "🐚", "type": ["di"] },
@@ -71,15 +72,15 @@
     { "id":"k1","emoji": "💀", "type": ["en"] },
     { "id":"k2","emoji": "🐔", "type": ["en"] },
     { "id":"k3","emoji": "🐙", "type": ["en"] },
-    { "id":"k4","emoji": "🔎", "type": ["en"] },
-    { "id":"k5","emoji": "🔱", "type": ["en"] },
+    { "id":"k4","emoji": "🔎", "type": ["en","gd"] },
+    { "id":"k5","emoji": "🔱", "type": ["en","gd"] },
 
     { "id":"l1","emoji": "💎", "type": ["en"] },
     { "id":"l2","emoji": "⏳", "type": ["en"] },
     { "id":"l3","emoji": "🎲", "type": ["en"] },
-    { "id":"l4","emoji": "🪐", "type": ["en"] },
-    { "id":"l5","emoji": "🌿", "type": ["en"] },
-    { "id":"l6","emoji": "🪶", "type": ["en"] },
+    { "id":"l4","emoji": "🪐", "type": ["en","gd"] },
+    { "id":"l5","emoji": "🌿", "type": ["en","gd"] },
+    { "id":"l6","emoji": "🪶", "type": ["en","gd"] },
 
     { "id":"m1","emoji": "👁️‍🗨️", "type": ["en"] },
     { "id":"m2","emoji": "🗿", "type": ["en"] },

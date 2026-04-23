@@ -7,6 +7,7 @@ let icons = [];
 let selectedIcon = null;
 let showWindow = false;
 let isEraseMode = false;
+let isInitialized = false; // URL読み込み完了フラグ
 let currentPage = 0;
 const iconsPerPage = 12;
 let listFilter = {};
@@ -14,9 +15,11 @@ const SNAP = 5;
 
 const win = { x: 100, y: 100, w: 400, h: 400, title: "➕✨" };
 
+// 1. データ読み込み（非同期を厳密に制御）
 async function loadData() {
     try {
         const response = await fetch('data.json');
+        if (!response.ok) throw new Error('Network response was not ok');
         const data = await response.json();
         availableIcons = data.availableIcons;
         
@@ -34,9 +37,14 @@ async function loadData() {
             container.appendChild(label);
         });
         
+        // マスターデータが揃ってからURLを展開
         loadFromURL();
+        isInitialized = true; // ここで初めてURL自動更新を解禁
         draw();
-    } catch (e) { console.error("Load failed", e); }
+    } catch (e) { 
+        console.error("Load failed", e);
+        showToast("❌📁");
+    }
 }
 
 function updateFilter(type) {
@@ -45,10 +53,12 @@ function updateFilter(type) {
     draw();
 }
 
+// 2. 描画コア
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "white"; ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // グリッド
     ctx.lineWidth = 1;
     for (let i = 0; i <= 600; i += 50) {
         ctx.beginPath(); ctx.strokeStyle = (i === 300) ? "#444" : "#eee";
@@ -56,9 +66,11 @@ function draw() {
         ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(600, i); ctx.stroke();
     }
 
+    // アイコン
     icons.forEach(icon => drawEmoji(icon.emoji, icon.x, icon.y, 48, 18));
     drawLabels();
 
+    // タイトル
     const title = document.getElementById('chartTitle').value;
     if(title) {
         ctx.font = "bold 24px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "top";
@@ -69,7 +81,9 @@ function draw() {
 
     if (showWindow) drawWindow();
     document.getElementById('addBtn').classList.toggle('active', showWindow);
-    syncURL();
+    
+    // 初期化が終わっている時のみURLを同期
+    if (isInitialized) syncURL();
 }
 
 function drawEmoji(emoji, x, y, fontSize, overlap) {
@@ -137,6 +151,7 @@ function drawWindow() {
     if(currentPage < maxPage) ctx.fillText("➡️", win.x+330, win.y+385);
 }
 
+// 3. UI演出
 function showToast(msg) {
     const old = document.querySelector('.toast'); if(old) old.remove();
     const t = document.createElement('div'); t.className='toast'; t.innerText=msg;
@@ -144,6 +159,7 @@ function showToast(msg) {
     setTimeout(() => { t.classList.add('fade-out'); setTimeout(()=>t.remove(), 500); }, 2000);
 }
 
+// 4. イベント処理
 function getPos(e) {
     const rect = canvas.getBoundingClientRect();
     const scale = 600 / rect.width;
@@ -196,13 +212,12 @@ window.addEventListener('touchmove', e => {
 window.addEventListener('mouseup', () => selectedIcon = null);
 window.addEventListener('touchend', () => selectedIcon = null);
 
-// --- Mode Toggle ---
 document.getElementById('eraseModeBtn').addEventListener('click', function() {
     isEraseMode = !isEraseMode;
     this.innerText = isEraseMode ? "🧼" : "👆";
     this.classList.toggle('active', isEraseMode);
     document.body.classList.toggle('erase-active', isEraseMode);
-    showToast(isEraseMode ? "🧼✅" : "👆✅");
+    showToast(isEraseMode ? "🧼 ✅" : "👆 ✅");
 });
 
 document.getElementById('addBtn').addEventListener('click', () => {
@@ -217,7 +232,6 @@ document.getElementById('addBtn').addEventListener('click', () => {
     draw();
 });
 
-// --- Actions ---
 let clearTimer = null;
 document.getElementById('clearBtn').addEventListener('click', function() {
     const btn = this;
@@ -233,13 +247,14 @@ document.getElementById('clearBtn').addEventListener('click', function() {
 });
 
 document.getElementById('shareBtn').addEventListener('click', () => {
-    navigator.clipboard.writeText(window.location.href).then(() => showToast("🔗📋 ✅"));
+    navigator.clipboard.writeText(window.location.href).then(() => showToast("🔗📋 ✨🏷️"));
 });
 document.getElementById('saveBtn').addEventListener('click', () => {
-    const a = document.createElement('a'); a.href = canvas.toDataURL(); a.download = 'chart.png'; a.click();
+    const a = document.createElement('a'); a.href = canvas.toDataURL(); a.download = '📊.png'; a.click();
+    showToast("💾🖼️ ✅");
 });
 
-// --- Sync ---
+// 5. URL・データ同期
 function syncURL() {
     try {
         const data = {
@@ -248,25 +263,29 @@ function syncURL() {
             i: icons.map(icon => `${icon.iconId},${icon.x/SNAP},${icon.y/SNAP}`).join(';')
         };
         const base64 = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
-        if (base64.length < 2000) window.history.replaceState(null, '', "?d=" + base64);
+        const newURL = window.location.origin + window.location.pathname + "?d=" + base64;
+        window.history.replaceState(null, '', newURL);
     } catch (e) {}
 }
 
 function loadFromURL() {
     const params = new URLSearchParams(window.location.search);
-    const d = params.get('d'); if (!d) return;
+    const d = params.get('d');
+    if (!d) return;
     try {
-        const data = JSON.parse(decodeURIComponent(escape(atob(d))));
-        document.getElementById('chartTitle').value = (data.t || "").substring(0, 30);
-        ["labelYpos", "labelYneg", "labelXpos", "labelXneg"].forEach((id, i) => document.getElementById(id).value = (data.l[i] || "").substring(0, 15));
-        if (data.i) {
+        const jsonStr = decodeURIComponent(escape(atob(d)));
+        const data = JSON.parse(jsonStr);
+        if (data.t) document.getElementById('chartTitle').value = data.t;
+        const ids = ["labelYpos", "labelYneg", "labelXpos", "labelXneg"];
+        if (data.l) ids.forEach((id, i) => document.getElementById(id).value = data.l[i] || "");
+        if (data.i && availableIcons.length > 0) {
             icons = data.i.split(';').map(str => {
                 const p = str.split(',');
                 const master = availableIcons.find(a => String(a.id) === String(p[0]));
                 return master ? { id: Math.random(), iconId: p[0], emoji: master.emoji, x: p[1]*SNAP, y: p[2]*SNAP } : null;
             }).filter(i => i !== null);
         }
-    } catch (e) {}
+    } catch (e) { console.error("URL Load Error", e); }
 }
 
 document.getElementById('exportBtn').addEventListener('click', () => {
